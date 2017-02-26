@@ -9,8 +9,9 @@ import (
 )
 
 type Config struct {
-  configType string
-  configApply bool
+  ConfigType string
+  ConfigApply bool
+  ConfigData []byte
 }
 
 type InputData struct {
@@ -44,11 +45,12 @@ func handleConnection(c net.Conn) {
   var config Config
 
   io.Copy(&data,c)
-  //s := string(data.input)
 
   // Do something with the input data:
-  if err := json.Unmarshal(data.input, &config); err != nil {
+  err := json.Unmarshal(data.input, &config)
+  if err != nil {
 		log.Fatal(err)
 	}
-  fmt.Sprintf(config.configType)
+  fmt.Printf("%+v", config)
+
 }
