@@ -4,16 +4,22 @@ import (
   "fmt"
   "net"
   "io"
+  "log"
+  "encoding/json"
 )
+
+type Config struct {
+  configType string
+  configApply bool
+}
 
 type InputData struct {
   input []byte
 }
 
 func (d *InputData) Write(p []byte) (i int, err error) {
-  addendum := []byte(" has been added to inputdata\n")
   d.input = p
-  d.input = append(d.input, addendum...)
+  // TODO: check for errors!
   return 0, nil
 }
 
@@ -35,6 +41,14 @@ func handleConnection(c net.Conn) {
   defer c.Close()
 
   var data InputData
+  var config Config
+
   io.Copy(&data,c)
-  s := string(data.input)
+  //s := string(data.input)
+
+  // Do something with the input data:
+  if err := json.Unmarshal(data.input, &config); err != nil {
+		log.Fatal(err)
+	}
+  fmt.Sprintf(config.configType)
 }
