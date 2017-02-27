@@ -6,6 +6,8 @@ import (
   "io"
   "log"
   "encoding/json"
+
+  "github.com/georgebuckerfield/go-config-agent/ssh"
 )
 
 type Config struct {
@@ -51,6 +53,12 @@ func handleConnection(c net.Conn) {
   if err != nil {
 		log.Fatal(err)
 	}
-  fmt.Printf("%+v", config)
+  //fmt.Printf("%+v", config)
 
+  if config.ConfigType == "ssh" {
+    err := ssh.Apply(config.ConfigData)
+    if err != nil {
+      log.Fatal(err)
+    }
+  }
 }
