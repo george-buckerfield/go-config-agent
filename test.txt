@@ -1,0 +1,8 @@
+{
+	"ConfigType": "ssh", 
+	"ConfigApply": true,
+	"ConfigData": {
+		"Username": "foo",
+		"Publickey": "3"
+	}
+}

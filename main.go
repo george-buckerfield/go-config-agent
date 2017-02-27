@@ -13,7 +13,7 @@ import (
 type Config struct {
   ConfigType string
   ConfigApply bool
-  ConfigData []byte
+  ConfigData json.RawMessage
 }
 
 type InputData struct {
@@ -56,7 +56,11 @@ func handleConnection(c net.Conn) {
   //fmt.Printf("%+v", config)
 
   if config.ConfigType == "ssh" {
-    err := ssh.Apply(config.ConfigData)
+
+    var sshConfig ssh.SSHConfig
+    json.Unmarshal(config.ConfigData, &sshConfig)
+
+    err := ssh.Apply(sshConfig)
     if err != nil {
       log.Fatal(err)
     }

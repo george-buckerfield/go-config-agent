@@ -5,11 +5,13 @@ import (
 )
 
 type SSHConfig struct {
-  sshUsername string
-  sshPublickey []byte
+  Username string
+  Publickey string
 }
 
-func Apply(config []byte) error {
-  fmt.Println("Applying some SSH changes")
+func Apply(config SSHConfig) error {
+  fmt.Print("Applying some SSH changes for username: ")
+  fmt.Println(config.Username)
+
   return nil
 }
