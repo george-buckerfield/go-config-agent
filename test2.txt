@@ -1,7 +1,0 @@
-{
-	"configType": "ssh", 
-	"configApply": true,
-	"configData": {
-		"sshUsername": "foo"
-	}
-}
